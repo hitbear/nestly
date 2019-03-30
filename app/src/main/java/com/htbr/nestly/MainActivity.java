@@ -34,17 +34,22 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                startDownload();
+                startUpload();
             }
         });
 
     }
 
 
-    private void startDownload() {
+    private void listenWifiState(){
+        
+    }
+
+
+    private void startUpload() {
         if (!downloading && networkFragment != null) {
             // Execute the async download.
-            networkFragment.startDownload();
+            networkFragment.startUpload();
             downloading = true;
         }
     }
@@ -58,7 +63,7 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
     }
 */
     @Override
-    public void updateFromDownload(Object result) {
+    public void updateFromUpload(Object result) {
         Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
 
     }

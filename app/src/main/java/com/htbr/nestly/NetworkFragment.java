@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.style.UpdateLayout;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class NetworkFragment extends Fragment {
     private static final String URL_KEY = "UrlKey";
 
     private DownloadCallback<String> mCallback;
-    private DownloadTask downloadTask;
+    private UploadTask uploadTask;
     private String urlString;
 
     /**
@@ -39,11 +40,11 @@ public class NetworkFragment extends Fragment {
      * from.
      */
 
-    private class DownloadTask extends AsyncTask<String, Integer, DownloadTask.Result> {
+    private class UploadTask extends AsyncTask<String, Integer, UploadTask.Result> {
 
         private DownloadCallback<String> mCallback;
 
-        DownloadTask(DownloadCallback<String> callback) {
+        UploadTask(DownloadCallback<String> callback) {
             setCallback(callback);
         }
 
@@ -79,7 +80,7 @@ public class NetworkFragment extends Fragment {
                         (networkInfo.getType() != ConnectivityManager.TYPE_WIFI
                                 && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE)) {
                     // If no connectivity, cancel task and update Callback with null data.
-                    mCallback.updateFromDownload(null);
+                    mCallback.updateFromUpload(null);
                     cancel(true);
                 }
             }
@@ -89,13 +90,13 @@ public class NetworkFragment extends Fragment {
          * Defines work to perform on the background thread.
          */
         @Override
-        protected DownloadTask.Result doInBackground(String... urls) {
+        protected UploadTask.Result doInBackground(String... urls) {
             Result result = null;
             if (!isCancelled() && urls != null && urls.length > 0) {
                 String urlString = urls[0];
                 try {
                     URL url = new URL(urlString);
-                    String resultString = downloadUrl(url);
+                    String resultString = uploadUrl(url);
                     if (resultString != null) {
                         result = new Result(resultString);
                     } else {
@@ -115,9 +116,9 @@ public class NetworkFragment extends Fragment {
         protected void onPostExecute(Result result) {
             if (result != null && mCallback != null) {
                 if (result.mException != null) {
-                    mCallback.updateFromDownload(result.mException.getMessage());
+                    mCallback.updateFromUpload(result.mException.getMessage());
                 } else if (result.mResultValue != null) {
-                    mCallback.updateFromDownload(result.mResultValue);
+                    mCallback.updateFromUpload(result.mResultValue);
                 }
                 mCallback.finishDownloading();
             }
@@ -149,7 +150,7 @@ public class NetworkFragment extends Fragment {
         }
 
 
-        private String downloadUrl(URL url) throws IOException {
+        private String uploadUrl(URL url) throws IOException {
             InputStream stream = null;
             HttpURLConnection connection = null;
             String result = null;
@@ -241,10 +242,10 @@ public class NetworkFragment extends Fragment {
     /**
      * Start non-blocking execution of DownloadTask.
      */
-    public void startDownload() {
+    public void startUpload() {
         cancelDownload();
-        downloadTask = new DownloadTask(mCallback);
-        downloadTask.execute(urlString);
+        uploadTask = new UploadTask(mCallback);
+        uploadTask.execute(urlString);
         //downloadTask.execute("http://192.168.178.12:7070/upload/");
         //downloadTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR ,urlString);
     }
@@ -253,8 +254,8 @@ public class NetworkFragment extends Fragment {
      * Cancel (and interrupt if necessary) any ongoing DownloadTask execution.
      */
     public void cancelDownload() {
-        if (downloadTask != null) {
-            downloadTask.cancel(true);
+        if (uploadTask != null) {
+            uploadTask.cancel(true);
         }
     }
 

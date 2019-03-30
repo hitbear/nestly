@@ -1,5 +1,6 @@
 package com.htbr.nestly;
 
+import android.content.BroadcastReceiver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
@@ -20,6 +21,9 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
     private boolean downloading = false;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +31,16 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
 
         final Button button = (Button)findViewById(R.id.button);
 
-
         networkFragment = NetworkFragment.getInstance(getSupportFragmentManager(), "http://192.168.178.12:7070/upload/");
 
+
+       // listenWifiState();
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                startUpload();
+               startUpload();
+
             }
         });
 
@@ -42,7 +48,10 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
 
 
     private void listenWifiState(){
-        
+
+        //startUpload();
+
+
     }
 
 

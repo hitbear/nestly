@@ -13,6 +13,12 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
 
 
         intent.getAction();
-        
+
+
+        // try to start service
+        Intent serviceIntent = new Intent(context, SendService.class);
+
+        context.startService(serviceIntent);
+
     }
 }

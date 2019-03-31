@@ -1,6 +1,7 @@
 package com.htbr.nestly;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
@@ -34,7 +35,13 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
         networkFragment = NetworkFragment.getInstance(getSupportFragmentManager(), "http://192.168.178.12:7070/upload/");
 
 
-       // listenWifiState();
+        // try to start service
+       // Intent intent = new Intent(this, SendService.class);
+       // startService(intent);
+
+
+
+        // listenWifiState();
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

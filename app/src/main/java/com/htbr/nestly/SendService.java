@@ -27,11 +27,17 @@ public class SendService extends Service {
     private Looper serviceLooper;
     private ServiceHandler serviceHandler;
     private String information;
+    private String networkstateinfor;
 
-
-    public void setInformation(String information){
-        this.information = information;
+    public void setInformation(String filename){
+        FileWriter fileWriter = new FileWriter();
+        this.information = fileWriter.readFile(this,filename);
     }
+    public void setNetworkStateInfo(String filename){
+        FileWriter fileWriter = new FileWriter();
+        this.networkstateinfor = fileWriter.readFile(this,filename);
+    }
+
     // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -44,8 +50,12 @@ public class SendService extends Service {
             try {
 
 
-                URL url = new URL("http://192.168.178.12:7070/upload/");
-                String resultString = uploadUrl(url,information);
+                //URL url = new URL("http://192.168.178.12:7070/upload/");
+                //String spec = R.string.servip;
+                URL url = new URL(getString(R.string.servip));
+                setInformation(getString(R.string.WifiP2PFileName));
+                setNetworkStateInfo(getString(R.string.NetworkStateFilename));
+                String resultString = uploadUrl(url,information, networkstateinfor);
 
 
                 //Thread.sleep(5000);
@@ -108,10 +118,11 @@ public class SendService extends Service {
     }
 
 
-    private String uploadUrl(URL url, String information) throws IOException {
+    private String uploadUrl(URL url, String information, String networkstateinfor) throws IOException {
         InputStream stream = null;
         HttpURLConnection connection = null;
         String result = null;
+        StringBuilder sb = new StringBuilder();
         try {
             connection = (HttpURLConnection) url.openConnection();
             // Timeout for reading InputStream arbitrarily set to 3000ms.
@@ -128,7 +139,13 @@ public class SendService extends Service {
             OutputStream os = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
-            writer.write("client=appclient");
+            sb.append("client=appclient&information=");
+
+            sb.append(information);
+            sb.append("&information2=");
+            sb.append(networkstateinfor);
+
+            writer.write(sb.toString());
             writer.flush();
             writer.close();
             os.close();

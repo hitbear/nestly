@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements DownloadCallback {
@@ -32,8 +33,8 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
 
         final Button button = (Button)findViewById(R.id.button);
 
-        networkFragment = NetworkFragment.getInstance(getSupportFragmentManager(), "http://192.168.178.12:7070/upload/");
-
+        networkFragment = NetworkFragment.getInstance(getSupportFragmentManager(), getString(R.string.servip));
+        final FileWriter fileWriter = new FileWriter();
 
         // try to start service
        // Intent intent = new Intent(this, SendService.class);
@@ -45,6 +46,17 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                // show file
+                //fileWriter.writeToFile(getApplicationContext(), getString(R.string.WifiP2PFileName),"lalal");
+
+
+                //Find the view by its id
+                TextView tv = (TextView)findViewById(R.id.textView);
+
+                //Set the text
+                tv.setText(fileWriter.readFile(getApplicationContext(), getString(R.string.WifiP2PFileName)).toString());
+
                 // Code here executes on main thread after user presses button
                startUpload();
 

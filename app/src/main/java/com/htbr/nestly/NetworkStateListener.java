@@ -23,9 +23,11 @@ public class NetworkStateListener extends BroadcastReceiver{
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         sb.append(currentDateTimeString+"\n");
 
+        intent.getAction();
+        //sb.append(intent.getData());
         fileWriter.writeToFile(context, context.getString(R.string.NetworkStateFilename),sb.toString());
 
-        intent.getAction();
+
     }
 
 

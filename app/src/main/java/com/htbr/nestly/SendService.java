@@ -63,7 +63,10 @@ public class SendService extends Service {
                 HttpURLConnection connection = null;
                 String result = null;
 
-
+                //ToDO: if successfull delete files
+               // FileWriter fileWriter = new FileWriter();
+               // fileWriter.delete(getApplicationContext(), getString(R.string.NetworkStateFilename));
+               // fileWriter.delete(getApplicationContext(), getString(R.string.WifiP2PFileName));
 
 
             } catch (MalformedURLException e) {
@@ -149,6 +152,10 @@ public class SendService extends Service {
             writer.flush();
             writer.close();
             os.close();
+
+            FileWriter fileWriter = new FileWriter();
+            fileWriter.delete(getApplicationContext(), getString(R.string.NetworkStateFilename));
+            fileWriter.delete(getApplicationContext(), getString(R.string.WifiP2PFileName));
 
             connection.connect();
             //publishProgress(DownloadCallback.Progress.CONNECT_SUCCESS);

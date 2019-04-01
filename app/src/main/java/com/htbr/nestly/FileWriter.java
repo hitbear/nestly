@@ -37,19 +37,16 @@ public class FileWriter {
 
 
     public String readFile(Context context, String fileName) {
-
+        StringBuilder sb = new StringBuilder();
 
         FileInputStream fis = null;
         try {
             fis = context.openFileInput(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        InputStreamReader isr = new InputStreamReader(fis);
-        BufferedReader bufferedReader = new BufferedReader(isr);
-        StringBuilder sb = new StringBuilder();
 
-        try {
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader bufferedReader = new BufferedReader(isr);
+
+
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -59,7 +56,8 @@ public class FileWriter {
 
         }
         catch (IOException e) {
-            //You'll need to add proper error handling here
+           e.printStackTrace();
+           sb.append("File does not exist");
         }
        // context.deleteFile(fileName);
         return sb.toString();

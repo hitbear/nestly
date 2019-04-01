@@ -67,9 +67,7 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
                 getApplicationContext().startService(serviceIntent);
 
 
-                //ToDO: if successfull delete files
-                //fileWriter.delete(getApplicationContext(), getString(R.string.NetworkStateFilename));
-                //fileWriter.delete(getApplicationContext(), getString(R.string.WifiP2PFileName));
+
             }
         });
 

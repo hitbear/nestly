@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+
 public class MainActivity extends FragmentActivity implements DownloadCallback {
 
 
@@ -52,14 +54,22 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
 
 
                 //Find the view by its id
-                TextView tv = (TextView)findViewById(R.id.textView);
+                //TextView tv = (TextView)findViewById(R.id.textView);
 
                 //Set the text
-                tv.setText(fileWriter.readFile(getApplicationContext(), getString(R.string.WifiP2PFileName)).toString());
+               // tv.setText(fileWriter.readFile(getApplicationContext(), getString(R.string.WifiP2PFileName)).toString());
 
                 // Code here executes on main thread after user presses button
-               startUpload();
+              // startUpload();
 
+                //send infos to server
+                Intent serviceIntent = new Intent(getApplicationContext(), SendService.class);
+                getApplicationContext().startService(serviceIntent);
+
+
+                //ToDO: if successfull delete files
+                //fileWriter.delete(getApplicationContext(), getString(R.string.NetworkStateFilename));
+                //fileWriter.delete(getApplicationContext(), getString(R.string.WifiP2PFileName));
             }
         });
 

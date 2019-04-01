@@ -60,9 +60,8 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
         //writeToFile(context, "test");
 
         // try to start service
-        Intent serviceIntent = new Intent(context, SendService.class);
-
-        context.startService(serviceIntent);
+       // Intent serviceIntent = new Intent(context, SendService.class);
+        //context.startService(serviceIntent);
 
     }
 

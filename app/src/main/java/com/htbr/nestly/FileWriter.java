@@ -114,4 +114,9 @@ public class FileWriter {
         return false;
     }
 
+
+    public void delete(Context context, String fileName){
+        context.deleteFile(fileName);
+    }
+
 }

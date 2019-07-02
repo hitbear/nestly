@@ -27,7 +27,7 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
         String action = intent.getAction();
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n\n-------P2PDeviceChanged-----\n");
+        sb.append("P2PDeviceChanged-");
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         sb.append(currentDateTimeString+"\n");
 
@@ -41,7 +41,7 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
             sb.append(myMac);
             sb.append(device.deviceName);
 
-            Log.d("WIFIp2p", "Device WiFi P2p MAC Address: " + myMac);
+            Log.d("WIFIp2p", "Device WiFi P2p MAC Address:" + myMac);
             Toast.makeText(context, "this device changed", Toast.LENGTH_LONG).show();
 
         }
@@ -53,7 +53,8 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
         if (wifi != null) {
             // Get current router MAC address
             String bssid = wifi.getBSSID();
-            sb.append("\nBssid: "+bssid);
+            sb.append("Bssid:"+bssid);
+            //Log.d("BSSID",bssid);
         }
         fileWriter.writeToFile(context, context.getString(R.string.WifiP2PFileName), sb.toString());
         // write data to file

@@ -19,9 +19,9 @@ public class NetworkStateListener extends BroadcastReceiver{
 
 
         StringBuilder sb = new StringBuilder();
-        sb.append("-------networkstate-----\n");
+        sb.append("networkstate-");
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-        sb.append(currentDateTimeString+"\n");
+        sb.append(currentDateTimeString);
 
         intent.getAction();
         //sb.append(intent.getData());

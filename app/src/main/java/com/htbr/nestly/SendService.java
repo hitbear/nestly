@@ -7,6 +7,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Base64;
 import android.widget.Toast;
 
 import java.io.BufferedWriter;
@@ -20,7 +21,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.net.ssl.HttpsURLConnection;
 
 public class SendService extends Service {
@@ -142,11 +149,36 @@ public class SendService extends Service {
             OutputStream os = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
-            sb.append("client=appclient&information=");
+            sb.append("client=appclient");
 
-            sb.append(information);
-            sb.append("&information2=");
-            sb.append(networkstateinfor);
+            //sb.append(information);
+            //encrypt
+            String preData = "";
+            try {
+                sb.append("&enc=true");
+                sb.append("&information=");
+                preData = Base64.encodeToString(Encryptor.encrypt(information.replace("\n","")),Base64.DEFAULT);
+                sb.append(preData);
+
+
+                sb.append("&information2=");
+                preData = Base64.encodeToString(Encryptor.encrypt(networkstateinfor.replace("\n","")),Base64.DEFAULT);
+                sb.append(preData);
+
+            } catch (BadPaddingException e) {
+                e.printStackTrace();
+            } catch (IllegalBlockSizeException e) {
+                e.printStackTrace();
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            } catch (NoSuchPaddingException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+
+
 
             writer.write(sb.toString());
             writer.flush();

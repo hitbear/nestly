@@ -19,7 +19,7 @@ public class NetworkStateListener extends BroadcastReceiver{
 
 
         StringBuilder sb = new StringBuilder();
-        sb.append("networkstate-");
+        sb.append("--------networkstate--------");
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         sb.append(currentDateTimeString);
 

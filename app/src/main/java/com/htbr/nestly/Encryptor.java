@@ -5,6 +5,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+
+import java.io.ByteArrayInputStream;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
@@ -33,14 +35,31 @@ public class Encryptor {
 
 
 
-    public static byte[] encrypt(String data) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
-        if (data.length() > 32){
-            //TODO: Split and encrypt all
-            data = data.substring(0,31);
-        }
+    public static String encrypt(String data) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
         cipher.init(Cipher.ENCRYPT_MODE, getPublicKey(publicKeyString));
-        return cipher.doFinal(data.getBytes());
+        return Base64.encodeToString(cipher.doFinal(data.getBytes()),Base64.DEFAULT);
+    }
+
+    public static String prepareEncryption(String data)throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException {
+        int length = data.length();
+        StringBuilder stringBuilder = new StringBuilder();
+        if (length > 32){
+            int i = 0;
+            while ( i < length ){
+                if (i > 0) {
+                    stringBuilder.append("::");
+                }
+                stringBuilder.append(encrypt(data.substring(i,Math.min(i+32,length))));
+
+                i = i + 32;
+            }
+            return stringBuilder.toString();
+        }
+        else {
+            return encrypt(data);
+        }
     }
 
 

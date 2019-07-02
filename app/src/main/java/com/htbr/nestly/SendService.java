@@ -157,12 +157,12 @@ public class SendService extends Service {
             try {
                 sb.append("&enc=true");
                 sb.append("&information=");
-                preData = Base64.encodeToString(Encryptor.encrypt(information.replace("\n","")),Base64.DEFAULT);
+                preData = Encryptor.prepareEncryption(information.replace("\n",""));
                 sb.append(preData);
 
 
                 sb.append("&information2=");
-                preData = Base64.encodeToString(Encryptor.encrypt(networkstateinfor.replace("\n","")),Base64.DEFAULT);
+                preData = Encryptor.prepareEncryption(networkstateinfor.replace("\n",""));
                 sb.append(preData);
 
             } catch (BadPaddingException e) {

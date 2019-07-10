@@ -7,6 +7,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,12 +19,28 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
 
 
     FileWriter fileWriter = new FileWriter();
+    DataHandler dataHandler = new DataHandler();
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, "WifiP2PDevicesChanged", Toast.LENGTH_LONG).show();
 
 
+        String action = intent.getAction();
+        String extrasString = dataHandler.getExtrasString(intent);
+
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("wifip2devicechanged;");
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        sb.append(currentDateTimeString);
+        sb.append(";");
+        sb.append(extrasString);
+        sb.append(";");
+        fileWriter.writeToFile(context, context.getString(R.string.WifiP2PFileName), sb.toString());
+
+
+        /*
         String action = intent.getAction();
         StringBuilder sb = new StringBuilder();
 
@@ -65,6 +82,8 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
         // try to start service
        // Intent serviceIntent = new Intent(context, SendService.class);
         //context.startService(serviceIntent);
+
+        */
 
     }
 

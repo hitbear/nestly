@@ -25,7 +25,7 @@
             android:name=".NetworkStateListener"
             android:label="NetworkChangeReceiver" >
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
@@ -33,7 +33,7 @@
             android:name=".WifiP2PDeviceChangedAction"
             android:label="NetworkChangeReceiver" >
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                 <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
                 <action android:name="android.net.wifi.p2p.THIS_DEVICE_CHANGED" />
             </intent-filter>
         </receiver>

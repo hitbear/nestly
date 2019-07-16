@@ -18,19 +18,19 @@ public class DataHandler {
                 Set<String> keySet = extras.keySet();
                 for (String key : keySet) {
                     try {
-                        String extraValue = pIntent.getExtras().get(key).toString();
-                        extrasString += key + ": " + extraValue + "\n";
+                        String extraValue = pIntent.getExtras().get(key).toString().replace("\"","");
+                        extrasString += "'" + key + "':'" + extraValue + "',";
                     } catch (Exception e) {
-                        Log.d(TAG, "Exception 2 in getExtrasString(): " + e.toString());
-                        extrasString += key + ": Exception:" + e.getMessage() + "\n";
+                        Log.d(TAG, "Exception 2 in getExtrasString():'" + e.toString() + "'");
+                        extrasString += "'" + key + "': 'Exception:" + e.getMessage().replace("\"","") + "',";
                     }
                 }
             }
         } catch (Exception e) {
             Log.d(TAG, "Exception in getExtrasString(): " + e.toString());
-            extrasString += "Exception:" + e.getMessage() + "\n";
+            extrasString += "' Exception:" + e.getMessage() + "'";
         }
         Log.d(TAG, "extras=" + extrasString);
-        return extrasString;
+        return extrasString.replace("\"" ,"'");
     }
 }

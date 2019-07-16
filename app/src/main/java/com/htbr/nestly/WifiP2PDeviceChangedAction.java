@@ -31,11 +31,14 @@ public class WifiP2PDeviceChangedAction extends BroadcastReceiver {
 
 
         StringBuilder sb = new StringBuilder();
-        sb.append("wifip2devicechanged;");
+        sb.append("{'action':'wifip2devicechanged',");
+        sb.append("'date':'");
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         sb.append(currentDateTimeString);
-        sb.append(";");
+        sb.append("',");
         sb.append(extrasString);
+        sb.append("}");
+        //append separator
         sb.append(";");
         fileWriter.writeToFile(context, context.getString(R.string.WifiP2PFileName), sb.toString());
 

@@ -27,11 +27,14 @@ public class NetworkStateListener extends BroadcastReceiver{
 
 
         StringBuilder sb = new StringBuilder();
-        sb.append("networkstate;");
+        sb.append("{'action':'networkstate',");
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        sb.append("'date':'");
         sb.append(currentDateTimeString);
-        sb.append(";");
+        sb.append("',");
         sb.append(extrasString);
+        sb.append("}");
+        //append separator
         sb.append(";");
         fileWriter.writeToFile(context, context.getString(R.string.NetworkStateFilename),sb.toString());
 

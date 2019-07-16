@@ -58,6 +58,8 @@ public class FileWriter {
         catch (IOException e) {
            e.printStackTrace();
            sb.append("File does not exist");
+           //append separator
+            sb.append(";");
         }
        // context.deleteFile(fileName);
         return sb.toString();

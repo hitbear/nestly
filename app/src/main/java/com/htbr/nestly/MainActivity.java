@@ -63,7 +63,11 @@ public class MainActivity extends FragmentActivity implements DownloadCallback {
               // startUpload();
 
                 //send infos to server
-                Intent serviceIntent = new Intent(getApplicationContext(), SendService.class);
+               // Intent serviceIntent = new Intent(getApplicationContext(), SendService.class);
+                //getApplicationContext().startService(serviceIntent);
+
+                //in this branch we scan the network //this code should only apper in branch "wifiScanner"
+                Intent serviceIntent = new Intent(getApplicationContext(), ScanNetworkService.class);
                 getApplicationContext().startService(serviceIntent);
 
 

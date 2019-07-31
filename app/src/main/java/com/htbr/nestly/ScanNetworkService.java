@@ -17,7 +17,16 @@ import java.util.List;
 
 public class ScanNetworkService extends Service {
 
-    WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    Context context;
+    WifiManager wifiManager;
+    //constructor
+    public ScanNetworkService(){
+
+        //wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+    }
+
+
 
     BroadcastReceiver wifiScanReceiver = new BroadcastReceiver() {
         @Override
@@ -55,6 +64,8 @@ public class ScanNetworkService extends Service {
         // Get the HandlerThread's Looper and use it for our Handler
         serviceLooper = thread.getLooper();
         serviceHandler = new ScanNetworkService(serviceLooper);
+
+        wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
 
@@ -71,14 +82,14 @@ public class ScanNetworkService extends Service {
         // If we get killed, after returning from here, restart
 
 
-        Context context = getApplicationContext();
+        //Context context = getApplicationContext();
 
         // Scan for available WIFI NETWORKS
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(this.WIFI_SERVICE);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        context.registerReceiver(wifiScanReceiver, intentFilter);
+        getApplicationContext().registerReceiver(wifiScanReceiver, intentFilter);
 
 
         boolean success = wifiManager.startScan();
@@ -96,6 +107,12 @@ public class ScanNetworkService extends Service {
     private void scanSuccess() {
         List<ScanResult> results = wifiManager.getScanResults();
         //... use new scan results ...
+
+        System.out.println("Scanned networks: " +results.size());
+
+        for(ScanResult result : results){
+            System.out.println("NETWORK_TO_STRING:  "+result.toString());
+        }
     }
 
     private void scanFailure() {

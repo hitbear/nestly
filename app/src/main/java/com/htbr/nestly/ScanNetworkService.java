@@ -105,13 +105,17 @@ public class ScanNetworkService extends Service {
 
 
     private void scanSuccess() {
+        WifiConnector wifiConnector = new WifiConnector(this);
         List<ScanResult> results = wifiManager.getScanResults();
         //... use new scan results ...
 
         System.out.println("Scanned networks: " +results.size());
 
         for(ScanResult result : results){
-            System.out.println("NETWORK_TO_STRING:  "+result.toString());
+            System.out.println("NETWORK_TO_STRING:  "+result.toString() + result.SSID);
+            if (result.SSID.equals("AndroidAP")){
+                wifiConnector.connectToNetwork(result);
+            }
         }
     }
 

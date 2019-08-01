@@ -85,7 +85,7 @@ public class ScanNetworkService extends Service {
         //Context context = getApplicationContext();
 
         // Scan for available WIFI NETWORKS
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(this.WIFI_SERVICE);
+
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);

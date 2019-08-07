@@ -49,7 +49,8 @@ public class Encryptor {
             int i = 0;
             while ( i < length ){
                 if (i > 0) {
-                    stringBuilder.append("::");
+                    // in a previous version split-sign was ::
+                    stringBuilder.append(";");
                 }
                 stringBuilder.append(encrypt(data.substring(i,Math.min(i+32,length))));
 
